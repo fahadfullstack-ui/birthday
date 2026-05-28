@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 💜</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:
+linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.7)),
+url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+overflow:hidden;
+font-family:'Noto Nastaliq Urdu', serif;
+color:white;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
+
+/* HEART SCREEN */
+
+#startScreen{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.75);
+backdrop-filter:blur(8px);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:100;
+}
+
+.heart{
+font-size:90px;
+cursor:pointer;
+animation:heartBeat 1.2s infinite;
+filter:drop-shadow(0 0 20px #d946ef);
+}
+
+@keyframes heartBeat{
+0%{transform:scale(1);}
+50%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
+
+.startText{
+margin-top:20px;
+font-size:24px;
+color:#f5d0fe;
+}
+
+/* MAIN */
+
+.container{
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:20px;
+animation:fadeMain 2s ease;
+}
+
+@keyframes fadeMain{
+from{
+opacity:0;
+}
+to{
+opacity:1;
+}
+}
+
+h1{
+font-size:48px;
+color:#f5c2ff;
+margin-bottom:25px;
+text-shadow:0 0 25px #ff4dff;
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{
+text-shadow:0 0 10px #ff8cff;
+}
+to{
+text-shadow:0 0 35px #ff00ff;
+}
+}
+
+#text{
+font-size:34px;
+line-height:2.2;
+padding:20px;
+max-width:900px;
+animation:textFade 2s ease;
+}
+
+@keyframes textFade{
+from{
+opacity:0;
+transform:translateY(25px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.imageBox{
+margin-top:20px;
+overflow:hidden;
+border-radius:22px;
+}
+
+img{
+width:240px;
+height:320px;
+object-fit:cover;
+border-radius:22px;
+border:2px solid rgba(255,255,255,0.2);
+box-shadow:0 0 25px rgba(255,105,255,0.4);
+animation:imageAnim 5s ease;
+}
+
+@keyframes imageAnim{
+
+0%{
+opacity:0;
+transform:scale(0.8);
+}
+
+50%{
+opacity:1;
+transform:scale(1.05);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* Floating Hearts */
+
+.heartFloat{
+position:absolute;
+bottom:-50px;
+font-size:22px;
+animation:floatUp linear forwards;
+opacity:0.7;
+}
+
+@keyframes floatUp{
+
+from{
+transform:translateY(0);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
+}
+
+@media(max-width:600px){
+
+h1{
+font-size:34px;
+}
+
+#text{
+font-size:24px;
+line-height:2;
+}
+
+img{
+width:210px;
+height:280px;
+}
+
+.startText{
+font-size:18px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+
+<div id="startScreen">
+
+<div class="heart" onclick="startWish()">💜</div>
+
+<div class="startText">
+Tap The Heart ✨
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="container" id="mainContent">
+
+<h1>Happy Birthday Meri Hani 💜</h1>
+
+<div id="text"></div>
+
+<div class="imageBox">
+<img id="image" src="1.jpg">
+</div>
+
+</div>
+
+<!-- MUSIC -->
+
+<audio id="music">
+
+<source src="husn.mp3.webm" type="audio/webm">
+
+</audio>
+
+<script>
+
+const poetry = [
+
+"جھیلیں کیا ہے ؟<br>اس کی آنکھیں",
+
+"عمدہ کیا ہے ؟<br>اس کا چہرہ",
+
+"خوشیاں کیا ہے ؟<br>اس کا ہونا",
+
+"میٹھا کیا ہے ؟<br>اس کی باتیں",
+
+"غم کیا ہے ؟<br>اس سے جدائی",
+
+"خوشبو کیا ہے ؟<br>اس کی سانسیں",
+
+"کیا کرتے ہو ؟<br>اس سے محبت",
+
+"اس کے علاوہ؟<br>اس سے محبت ، بس اس سے محبت",
+
+"مطلب پیشہ کیا ہے ؟<br>اس سے محبت ،بس اس سے محبت 💫"
+
+];
+
+const images = [
+
+"1.jpg",
+"2.jpg",
+"3.jpg",
+"4.jpg",
+"5.jpg",
+"6.jpg",
+"7.jpg"
+
+];
+
+let i = 0;
+
+/* START WEBSITE */
+
+function startWish(){
+
+document.getElementById("startScreen").style.display="none";
+
+document.getElementById("mainContent").style.display="flex";
+
+const music = document.getElementById("music");
+
+music.currentTime = 35;
+
+music.play();
+
+changeContent();
+
+setInterval(changeContent,5000);
+
+}
+
+/* CHANGE CONTENT */
+
+function changeContent(){
+
+document.getElementById("text").innerHTML = poetry[i];
+
+const img = document.getElementById("image");
+
+img.style.animation="none";
+
+void img.offsetWidth;
+
+img.src = images[i % images.length];
+
+img.style.animation="imageAnim 5s ease";
+
+i++;
+
+if(i >= poetry.length){
+
+i = 0;
+
+}
+
+}
+
+/* FLOATING HEARTS */
+
+function createHeart(){
+
+const heart = document.createElement("div");
+
+heart.classList.add("heartFloat");
+
+heart.innerHTML = "💜";
+
+heart.style.left = Math.random()*100 + "vw";
+
+heart.style.animationDuration =
+(Math.random()*5 + 5) + "s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},10000);
+
+}
+
+setInterval(createHeart,700);
+
+</script>
+
+</body>
+</html>
